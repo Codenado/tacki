@@ -8,9 +8,10 @@ class MainController {
     this.$http = $http;
     this.awesomeThings = [];
 
-    $http.get('/api/things').then(response => {
+    $http.get('/api/tacks').then(response => {
       this.awesomeThings = response.data;
       socket.syncUpdates('thing', this.awesomeThings);
+      console.log(this.awesomeThings)
     });
 
     $scope.$on('$destroy', function() {
@@ -20,7 +21,9 @@ class MainController {
 
   addThing() {
     if (this.newThing) {
-      this.$http.post('/api/things', { name: this.newThing });
+      this.$http.post('/api/tacks', { url: this.newThing,
+                                      name: 'fun', description: 'notfun'
+                                                      });
       this.newThing = '';
     }
   }
