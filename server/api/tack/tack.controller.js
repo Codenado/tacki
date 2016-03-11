@@ -11,6 +11,7 @@
 
 import _ from 'lodash';
 var Tack = require('./tack.model');
+var ObjectId = require('mongoose').Types.ObjectId
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
@@ -61,19 +62,18 @@ function removeEntity(res) {
 
 // Gets a list of Tacks
 export function index(req, res) {
-  Tack.loadRecent(function (err, tack) {
-   if(err) { return handleError(res, err); }
-   console.log(tack)
-   return res.json(200, tack);
- });
-}
-
-// Gets a single Tack from the DB
-export function show(req, res) {
-  Tack.find(author: req.params.id)
-    .then(handleEntityNotFound(res))
+  Tack.findAsync()
     .then(responseWithResult(res))
     .catch(handleError(res));
+}
+
+// Gets a single User's Tacks from the DB
+export function show(req, res) {
+  
+  Tack.find({ author: new ObjectId('56b3e1022540edb10bec1d41') })
+    .then(handleEntityNotFound(res))
+    .then(responseWithResult(res))
+    .catch( handleError(res));
 }
 
 // Creates a new Tack in the DB
