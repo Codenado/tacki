@@ -6,16 +6,16 @@ class MainController {
 
   constructor($http, $scope, socket) {
     this.$http = $http;
-    this.awesomeThings = [];
+    this.tacks = [];
 
     $http.get('/api/tacks').then(response => {
-      this.awesomeThings = response.data;
-      socket.syncUpdates('thing', this.awesomeThings);
-      console.log(this.awesomeThings)
+      this.tacks = response.data;
+      console.log(this.tacks)
+      socket.syncUpdates('tack', this.tacks);
     });
 
     $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('thing');
+      socket.unsyncUpdates('tack');
     });
   }
 
